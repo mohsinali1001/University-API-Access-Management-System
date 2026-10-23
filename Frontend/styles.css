@@ -186,3 +186,22 @@ label { display: block; font-weight: 600; margin-bottom: .3rem; font-size: .92re
     .table-stack td::before { content: attr(data-label); font-weight: 600; color: var(--muted); text-align: left; }
     .table-stack .actions { justify-content: flex-end; }
 }
+
+/* ---------- admin panel (Phase 7) ---------- */
+.label { display: block; font-weight: 600; margin-bottom: .3rem; }
+.input-auto { width: auto; min-width: 11rem; }
+.gate { max-width: 460px; margin: 2rem auto; }
+.tabs { display: flex; gap: .25rem; border-bottom: 2px solid var(--border); margin-bottom: 1rem; overflow-x: auto; }
+.tab { background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -2px; padding: .6rem 1rem; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.tab:hover { color: var(--primary); }
+.tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+.tab:focus-visible { outline: 3px solid rgba(29, 78, 216, .35); outline-offset: -3px; border-radius: 6px; }
+.modal.modal-wide { max-width: 760px; }
+.sub-title { margin: 1.1rem 0 .5rem; font-size: .95rem; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
+.table td .btn + .btn { margin-left: .2rem; }
+.table td .hint { display: block; }
+@media (max-width: 640px) {
+    .table-stack .actions { flex-wrap: wrap; }
+    .input-auto { width: 100%; }
+}
