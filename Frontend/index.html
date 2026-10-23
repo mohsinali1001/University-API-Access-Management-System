@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University API Access Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-root="">
+    <header id="navbar"></header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>University API Access Management System</h1>
+            <p>Manage API keys, let students view their own academic records, and let teachers review the marks of all
+                students, all protected by per-user API keys and request limits.</p>
+        </section>
+
+        <div class="grid grid-2">
+            <a class="card card-link" href="student.html">
+                <div class="card-icon">🎓</div>
+                <h3>Student Portal</h3>
+                <p>View your own profile and academic marks.</p>
+            </a>
+            <a class="card card-link" href="teacher.html">
+                <div class="card-icon">👩‍🏫</div>
+                <h3>Teacher Portal</h3>
+                <p>Browse student records and marks for all students.</p>
+            </a>
+            <a class="card card-link" href="settings.html">
+                <div class="card-icon">🔑</div>
+                <h3>Settings</h3>
+                <p>Enter and save the API key assigned to you.</p>
+            </a>
+            <a class="card card-link" href="admin/index.html">
+                <div class="card-icon">🛠️</div>
+                <h3>Admin Panel</h3>
+                <p>Generate keys, set limits, track usage and revoke access.</p>
+            </a>
+        </div>
+
+        <section class="card stack" style="margin-top:1.5rem">
+            <div class="row row-between">
+                <h2 class="card-title" style="margin:0">Server status</h2>
+                <button id="refreshStatus" class="btn btn-light btn-sm" type="button">Refresh</button>
+            </div>
+            <div id="statusBox">
+                <div class="loading"><span class="spinner"></span> Checking server…</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">Air University Islamabad, Kamra Campus · Full Stack Development Lab 07</footer>
+
+    <script src="js/lib/jquery-3.7.1.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
