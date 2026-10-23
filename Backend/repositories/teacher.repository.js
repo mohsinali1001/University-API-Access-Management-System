@@ -16,6 +16,15 @@ const teacherRepository = {
     async exists(id) {
         const [rows] = await db.query('SELECT 1 FROM teachers WHERE id = ?', [id]);
         return rows.length > 0;
+    },
+
+    async findById(id) {
+        const [rows] = await db.query(
+            `SELECT t.id, t.name, t.email, t.department, t.created_at AS createdAt
+               FROM teachers t WHERE t.id = ?`,
+            [id]
+        );
+        return rows[0] || null;
     }
 };
 

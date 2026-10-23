@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal · University API Access Management System</title>
+    <meta name="description" content="Browse all student records and academic marks using your teacher API key.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-root="">
+    <header id="navbar"></header>
+
+    <main class="container">
+        <div class="row row-between page-title">
+            <div>
+                <h1>Teacher Portal</h1>
+                <p id="teacherWelcome">Review student records and marks for the whole class.</p>
+            </div>
+        </div>
+
+        <div class="tabs" role="tablist">
+            <button class="tab active" role="tab" id="tabStudents"
+                    aria-controls="panelStudents" aria-selected="true" type="button">
+                Students
+            </button>
+            <button class="tab" role="tab" id="tabMarks"
+                    aria-controls="panelMarks" aria-selected="false" type="button">
+                All Marks
+            </button>
+        </div>
+
+        <!-- Students panel -->
+        <section id="panelStudents" role="tabpanel" aria-labelledby="tabStudents" class="stack">
+            <form id="filterForm" class="card filters" novalidate>
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:.75rem; align-items:flex-end">
+                    <div class="form-group" style="margin:0">
+                        <label for="fSearch">Name or roll number</label>
+                        <input id="fSearch" class="input" type="search" maxlength="50"
+                               placeholder="e.g. Ali or 231001">
+                    </div>
+                    <div class="form-group" style="margin:0">
+                        <label for="fDepartment">Department</label>
+                        <select id="fDepartment" class="input">
+                            <option value="">All departments</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin:0">
+                        <label for="fSemester">Semester</label>
+                        <select id="fSemester" class="input">
+                            <option value="">All semesters</option>
+                            <option>1</option><option>2</option><option>3</option><option>4</option>
+                            <option>5</option><option>6</option><option>7</option><option>8</option>
+                        </select>
+                    </div>
+                    <div class="form-group row" style="margin:0; padding-top:.1rem">
+                        <button class="btn btn-primary" type="submit">Apply</button>
+                        <button id="clearFilters" class="btn btn-light" type="button">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div id="studentsBox">
+                <div class="loading"><span class="spinner"></span> Loading students…</div>
+            </div>
+        </section>
+
+        <!-- All marks panel -->
+        <section id="panelMarks" role="tabpanel" aria-labelledby="tabMarks" class="stack hidden">
+            <div class="card filters">
+                <div class="row">
+                    <div class="form-group" style="margin:0; flex:0 0 auto; min-width:220px">
+                        <label for="fSubject">Filter by subject</label>
+                        <select id="fSubject" class="input">
+                            <option value="">All subjects</option>
+                        </select>
+                    </div>
+                    <div style="padding-top:1.4rem">
+                        <button id="reloadMarks" class="btn btn-light" type="button">↻ Reload from server</button>
+                    </div>
+                </div>
+            </div>
+            <div id="marksBox"></div>
+        </section>
+    </main>
+
+    <footer class="footer">Air University Islamabad, Kamra Campus · Full Stack Development Lab 07</footer>
+
+    <script src="js/lib/jquery-3.7.1.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/teacher.js"></script>
+</body>
+
+</html>

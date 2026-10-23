@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University API Access Management System</title>
+    <meta name="description" content="Manage API keys, view student academic records, and control access using per-user API keys and request limits.">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -12,39 +13,55 @@
     <header id="navbar"></header>
 
     <main class="container">
-        <section class="hero">
+        <section class="hero" aria-label="System overview">
             <h1>University API Access Management System</h1>
-            <p>Manage API keys, let students view their own academic records, and let teachers review the marks of all
-                students, all protected by per-user API keys and request limits.</p>
+            <p>A secure REST API that manages per-user API keys, enforces request limits, and controls
+               access to student and teacher academic records. Administrators can generate keys,
+               monitor usage, and revoke access in real time.</p>
         </section>
 
-        <div class="grid grid-2">
-            <a class="card card-link" href="student.html">
+        <h2 style="margin-bottom:.75rem;font-size:1rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em">
+            Quick navigation
+        </h2>
+        <div class="grid grid-2" style="margin-bottom:2rem">
+            <a class="card card-link" href="student.html" id="nav-student">
                 <div class="card-icon">🎓</div>
                 <h3>Student Portal</h3>
-                <p>View your own profile and academic marks.</p>
+                <p>View your own profile and academic marks. Requires a student API key.</p>
             </a>
-            <a class="card card-link" href="teacher.html">
+            <a class="card card-link" href="teacher.html" id="nav-teacher">
                 <div class="card-icon">👩‍🏫</div>
                 <h3>Teacher Portal</h3>
-                <p>Browse student records and marks for all students.</p>
+                <p>Browse all student records and marks. Requires a teacher API key.</p>
             </a>
-            <a class="card card-link" href="settings.html">
+            <a class="card card-link" href="settings.html" id="nav-settings">
                 <div class="card-icon">🔑</div>
                 <h3>Settings</h3>
-                <p>Enter and save the API key assigned to you.</p>
+                <p>Save, test, and manage the API key assigned to you by the administrator.</p>
             </a>
-            <a class="card card-link" href="admin/index.html">
-                <div class="card-icon">🛠️</div>
+            <a class="card card-link" href="admin/index.html" id="nav-admin">
+                <div class="card-icon">🛠</div>
                 <h3>Admin Panel</h3>
-                <p>Generate keys, set limits, track usage and revoke access.</p>
+                <p>Generate keys, set limits, monitor usage, and revoke access. Requires the admin key.</p>
             </a>
         </div>
 
-        <section class="card stack" style="margin-top:1.5rem">
+        <section class="card" style="margin-bottom:1.5rem">
+            <h2 class="card-title">How it works</h2>
+            <ol style="margin:0;padding-left:1.4rem;line-height:1.9">
+                <li>The administrator opens the <strong>Admin Panel</strong> and generates an API key for a student or teacher.</li>
+                <li>The key is shared securely with the user, who saves it on the <strong>Settings</strong> page.</li>
+                <li>The student or teacher opens their portal — every request automatically sends the key in the
+                    <code>x-api-key</code> header.</li>
+                <li>The server validates the key, checks the user's role, and enforces the configured request limit.</li>
+                <li>The admin can monitor usage, raise limits, or revoke a key at any time.</li>
+            </ol>
+        </section>
+
+        <section class="card stack" aria-label="Server status">
             <div class="row row-between">
-                <h2 class="card-title" style="margin:0">Server status</h2>
-                <button id="refreshStatus" class="btn btn-light btn-sm" type="button">Refresh</button>
+                <h2 class="card-title" style="margin:0">API server status</h2>
+                <button id="refreshStatus" class="btn btn-light btn-sm" type="button">↻ Refresh</button>
             </div>
             <div id="statusBox">
                 <div class="loading"><span class="spinner"></span> Checking server…</div>

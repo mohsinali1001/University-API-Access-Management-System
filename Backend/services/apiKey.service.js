@@ -24,11 +24,17 @@ function assertActive(key) {
 }
 
 const apiKeyService = {
-    list(query) {
+    async list(query) {
         const filters = {};
         if (query.status !== undefined)    filters.status = parseEnum(query.status, Object.values(KEY_STATUS), 'status');
         if (query.ownerType !== undefined) filters.ownerType = parseEnum(query.ownerType, OWNER_TYPES, 'ownerType');
-        return apiKeyRepository.findAll(filters);
+        const rows = await apiKeyRepository.findAll(filters);
+        return rows.map((k) => {
+            const masked = k.keyValue ? `${k.keyValue.slice(0, 8)}…${k.keyValue.slice(-4)}` : null;
+            const item = { ...k, maskedKey: masked };
+            delete item.keyValue; // Never expose raw full keys in list endpoints
+            return item;
+        });
     },
 
     async generate(body = {}) {
@@ -46,13 +52,20 @@ const apiKeyService = {
             throw AppError.conflict(`This ${ownerType} already has an active key. Revoke it first`);
         }
 
+        const rawKey = generateApiKey(ownerType);
         const id = await apiKeyRepository.create({
-            keyValue: generateApiKey(ownerType),
+            keyValue: rawKey,
             ownerType,
             ownerId,
             requestLimit
         });
-        return apiKeyRepository.findById(id);
+        const created = await apiKeyRepository.findById(id);
+        return {
+            ...created,
+            keyValue: rawKey,
+            rawKey,
+            maskedKey: `${rawKey.slice(0, 8)}…${rawKey.slice(-4)}`
+        };
     },
 
     async updateLimit(rawId, body = {}) {

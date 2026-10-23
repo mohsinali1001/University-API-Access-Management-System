@@ -50,6 +50,14 @@ $(function () {
         }
     });
 
+    // Show/Hide toggle for the key input
+    $('#gateToggle').on('click', function () {
+        const $inp    = $('#adminKeyInput');
+        const showing = $inp.attr('type') === 'text';
+        $inp.attr('type', showing ? 'password' : 'text');
+        $(this).text(showing ? 'Show' : 'Hide').attr('aria-pressed', !showing);
+    });
+
     $('#lockBtn').on('click', () => {
         KeyStore.clearAdminKey();
         showGate();
@@ -130,8 +138,7 @@ $(function () {
             },
             {
                 label: 'Key',
-                render: (k) => `<code>${UI.escape(maskKey(k.keyValue))}</code>
-                    <button class="btn btn-light btn-sm" data-act="copy" data-id="${k.id}" type="button" title="Copy full key">Copy</button>`
+                render: (k) => `<code>${UI.escape(k.maskedKey || (k.keyValue ? maskKey(k.keyValue) : '••••••••'))}</code>`
             },
             {
                 label: 'Usage',

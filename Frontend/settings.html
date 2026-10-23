@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings · University API Access Management System</title>
+    <meta name="description" content="Save and manage your API key for the University API Access Management System.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-root="">
+    <header id="navbar"></header>
+
+    <main class="container">
+        <div class="page-title">
+            <h1>API Key Settings</h1>
+            <p>Save the API key your administrator assigned to you. It is sent with every request to the server.</p>
+        </div>
+
+        <div class="grid grid-2">
+            <!-- Current saved key -->
+            <section class="card">
+                <h2 class="card-title">Current saved key</h2>
+                <div id="savedKeyBox">
+                    <div class="loading"><span class="spinner"></span> Checking storage…</div>
+                </div>
+            </section>
+
+            <!-- Save a new key -->
+            <section class="card">
+                <h2 class="card-title">Save / update key</h2>
+                <form id="keyForm" novalidate>
+                    <div class="form-group">
+                        <label for="keyInput">Your API key</label>
+                        <div class="input-group">
+                            <input id="keyInput" class="input" type="password" autocomplete="off"
+                                   spellcheck="false" maxlength="64"
+                                   placeholder="stu_… or tch_…"
+                                   aria-describedby="keyHint keyError">
+                            <button id="toggleKey" class="btn btn-light" type="button" aria-pressed="false">Show</button>
+                        </div>
+                        <div id="keyError" class="form-error" role="alert"></div>
+                        <div id="keyHint" class="hint">
+                            Student keys start with <code>stu_</code>, teacher keys with <code>tch_</code>.
+                            The key is verified with the server before saving (uses one request from your quota).
+                        </div>
+                    </div>
+                    <button id="saveBtn" class="btn btn-primary btn-block" type="submit">Check and save key</button>
+                </form>
+                <div id="saveResult" style="margin-top:1rem"></div>
+
+                <hr style="border:0;border-top:1px solid var(--border);margin:1.5rem 0">
+
+                <p class="hint" style="margin-bottom:.75rem">
+                    ⚠ Your key is stored in <strong>this browser only</strong>.
+                    Do not share it, and do not paste it into untrusted sites.
+                </p>
+            </section>
+        </div>
+
+        <!-- Admin session key (separate section) -->
+        <section class="card" style="margin-top:1.25rem">
+            <h2 class="card-title">Admin session key</h2>
+            <p class="hint" style="margin-bottom:.75rem">
+                The admin key is kept only for this browser tab (session storage) and is cleared when you close the tab.
+                It is never stored in local storage.
+            </p>
+            <div class="row" style="margin-bottom:.75rem">
+                <span class="hint">Saved admin key: </span>
+                <span id="adminKeyBox"></span>
+            </div>
+            <form id="adminKeyForm" autocomplete="off" class="row">
+                <div class="input-group" style="flex:1">
+                    <input id="adminKeyInput" class="input" type="password" maxlength="64"
+                           placeholder="admin_…" spellcheck="false" aria-label="Admin API key">
+                    <button id="adminKeyToggle" class="btn btn-light" type="button">Show</button>
+                </div>
+                <button class="btn btn-light" type="submit">Save for session</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">Air University Islamabad, Kamra Campus · Full Stack Development Lab 07</footer>
+
+    <script src="js/lib/jquery-3.7.1.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+
+</html>

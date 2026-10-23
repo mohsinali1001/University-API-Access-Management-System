@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel · University API Access</title>
+    <title>Admin Panel · University API Access Management System</title>
+    <meta name="description" content="Generate API keys, monitor usage, update limits, and revoke access.">
     <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -15,39 +16,52 @@
         <div class="page-title row row-between">
             <div>
                 <h1>Admin Panel</h1>
-                <p>Manage students, teachers and API keys.</p>
+                <p>Generate API keys, monitor usage, update limits, and revoke access.</p>
             </div>
-            <button id="lockBtn" class="btn btn-light btn-sm hidden" type="button">🔒 Lock panel</button>
+            <button id="lockBtn" class="btn btn-light btn-sm hidden" type="button" aria-label="Lock admin panel">
+                🔒 Lock panel
+            </button>
         </div>
 
         <!-- ============ Admin key gate ============ -->
-        <section id="gate" class="card gate hidden">
+        <section id="gate" class="card gate hidden" aria-label="Administrator authentication">
             <h2 class="card-title">Administrator access</h2>
-            <p class="hint" style="margin-bottom:1rem">Enter the predefined admin API key (<code>ADMIN_API_KEY</code> in
-                the backend <code>.env</code>). It is kept only for this browser tab.</p>
-            <form id="gateForm" autocomplete="off">
+            <p class="hint" style="margin-bottom:1.25rem">
+                Enter the predefined admin API key (<code>ADMIN_API_KEY</code> in the backend <code>.env</code>).
+                It is kept only for this browser tab and cleared when you close it.
+            </p>
+            <form id="gateForm" autocomplete="off" novalidate>
                 <div class="form-group">
                     <label for="adminKeyInput" class="label">Admin API key</label>
-                    <input id="adminKeyInput" class="input" type="password" required maxlength="64"
-                        placeholder="admin_…" spellcheck="false">
-                    <div id="gateError" class="form-error hidden"></div>
+                    <div class="input-group">
+                        <input id="adminKeyInput" class="input" type="password" required maxlength="64"
+                               placeholder="admin_…" spellcheck="false" aria-describedby="gateError">
+                        <button type="button" id="gateToggle" class="btn btn-light" aria-pressed="false">Show</button>
+                    </div>
+                    <div id="gateError" class="form-error" role="alert"></div>
                 </div>
-                <button id="gateBtn" class="btn btn-primary" type="submit">Unlock</button>
+                <button id="gateBtn" class="btn btn-primary btn-block" type="submit">Unlock admin panel</button>
             </form>
         </section>
 
-        <!-- ============ Dashboard ============ -->
+        <!-- ============ Dashboard (shown after auth) ============ -->
         <div id="panel" class="hidden">
-            <div id="overview" class="grid grid-4"></div>
 
-            <div class="tabs" role="tablist" style="margin-top:1.5rem">
-                <button class="tab active" role="tab" data-tab="keys" type="button">API Keys</button>
-                <button class="tab" role="tab" data-tab="students" type="button">Students</button>
-                <button class="tab" role="tab" data-tab="teachers" type="button">Teachers</button>
+            <!-- Stats overview -->
+            <div id="overview" class="grid grid-4" style="margin-bottom:1.5rem"></div>
+
+            <!-- Tab navigation -->
+            <div class="tabs" role="tablist" aria-label="Admin sections">
+                <button class="tab active" role="tab" data-tab="keys" type="button"
+                        aria-selected="true" aria-controls="tab-keys">API Keys</button>
+                <button class="tab" role="tab" data-tab="students" type="button"
+                        aria-selected="false" aria-controls="tab-students">Students</button>
+                <button class="tab" role="tab" data-tab="teachers" type="button"
+                        aria-selected="false" aria-controls="tab-teachers">Teachers</button>
             </div>
 
-            <!-- Keys -->
-            <section id="tab-keys" class="tab-panel stack">
+            <!-- Keys tab -->
+            <section id="tab-keys" class="tab-panel stack" role="tabpanel" aria-label="API Keys management">
                 <div class="row row-between">
                     <div class="row">
                         <select id="filterStatus" class="input input-auto" aria-label="Filter by status">
@@ -57,25 +71,25 @@
                         </select>
                         <select id="filterOwner" class="input input-auto" aria-label="Filter by owner type">
                             <option value="">Students &amp; teachers</option>
-                            <option value="student">Students</option>
-                            <option value="teacher">Teachers</option>
+                            <option value="student">Students only</option>
+                            <option value="teacher">Teachers only</option>
                         </select>
                     </div>
                     <div class="row">
-                        <button id="refreshBtn" class="btn btn-light" type="button">Refresh</button>
+                        <button id="refreshBtn" class="btn btn-light" type="button">↻ Refresh</button>
                         <button id="newKeyBtn" class="btn btn-primary" type="button">+ Generate key</button>
                     </div>
                 </div>
                 <div id="keysTable"></div>
             </section>
 
-            <!-- Students -->
-            <section id="tab-students" class="tab-panel hidden">
+            <!-- Students tab -->
+            <section id="tab-students" class="tab-panel hidden" role="tabpanel" aria-label="Students">
                 <div id="studentsTable"></div>
             </section>
 
-            <!-- Teachers -->
-            <section id="tab-teachers" class="tab-panel hidden">
+            <!-- Teachers tab -->
+            <section id="tab-teachers" class="tab-panel hidden" role="tabpanel" aria-label="Teachers">
                 <div id="teachersTable"></div>
             </section>
         </div>
